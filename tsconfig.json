@@ -1,0 +1,15 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"baseUrl": ".",
+		"outDir": "dist",
+		"incremental": true,
+		"target": "es2018",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"declaration": false,
+		"sourceMap": true,
+		"lib": ["es2018"]
+	},
+	"include": ["src"]
+}
