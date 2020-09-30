@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"joi": "^17.2.1",
+		"param-case": "^3.0.3",
 		"websocket": "^1.0.32"
 	}
 }

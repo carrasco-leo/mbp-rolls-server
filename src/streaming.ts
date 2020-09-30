@@ -7,6 +7,9 @@ import { request } from 'websocket';
 
 import { isOriginAllowed } from './origin-allowed';
 import { log, errorlog } from './logging';
+import { generateId, ids } from './connected-users';
+import { closeEvent, messageEvent, errorEvent } from './events';
+import { User } from './user';
 
 export function streaming(req: request): void {
 	if (!isOriginAllowed(req.origin)) {
@@ -16,9 +19,21 @@ export function streaming(req: request): void {
 	}
 
 	const connection = req.accept(null, req.origin);
-	log('Client connected');
+	const user: User = { id: generateId(), name: null };
 
-	connection.on('error', (error) => errorlog('connection error:', error));
-	connection.on('close', () => log('Client disconnected'));
-	connection.on('message', (ev) => log('%s message:', ev.type, ev.utf8Data));
+	ids.add(user.id);
+	log('Client %s connected', user.id);
+
+	connection.on('error', (error) => errorEvent(user, error));
+	connection.on('close', () => closeEvent(user));
+
+	connection.on('message', (event) => messageEvent(connection, user, event)
+		.catch((error) => {
+			errorlog('Client %s (%s) error:', user.id, user.name, error);
+			connection.sendUTF(JSON.stringify({
+				type: 'error',
+				reason: error.message,
+			}));
+		})
+	);
 }
