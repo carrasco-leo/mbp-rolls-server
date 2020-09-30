@@ -15,3 +15,5 @@ export interface MessageFn {
 export const messagesFn: { [key: string]: MessageFn; } = {
 	rename,
 }
+
+export * from './error';

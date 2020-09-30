@@ -6,6 +6,7 @@
 import { connection } from 'websocket';
 import * as joi from 'joi';
 
+import { MessageError } from './error';
 import { User } from '../user';
 import { slugify } from '../util';
 import { usernames, connected, broadcast } from '../connected-users';
@@ -24,14 +25,14 @@ const schema = joi.object({
 export function rename(connection: connection, user: User, data: any) {
 	return schema.validateAsync(data)
 		.catch((error: joi.ValidationError) => {
-			return Promise.reject(new Error(`rename: ${error.message}`));
+			return Promise.reject(new MessageError('rename', error.message));
 		})
 		.then((data: RenameData) => {
 			const currentSlug = slugify(user.name);
 			const slug = slugify(data.value);
 
 			if (slug !== currentSlug && usernames.has(slug)) {
-				return Promise.reject(new Error('rename: the username is already used'));
+				return Promise.reject(new MessageError('rename', 'The username is already used'));
 			}
 
 			// first identification
