@@ -7,10 +7,11 @@ import { request } from 'websocket';
 
 import { isOriginAllowed } from './origin-allowed';
 import { log, errorlog } from './logging';
-import { generateId, ids } from './connected-users';
+import { ids } from './connected-users';
 import { closeEvent, messageEvent, errorEvent } from './events';
-import { User } from './user';
+import { User, generateUser } from './user';
 import { MessageError } from './messages';
+import { generateId } from './util';
 
 export function streaming(req: request): void {
 	if (!isOriginAllowed(req.origin)) {
@@ -20,7 +21,7 @@ export function streaming(req: request): void {
 	}
 
 	const connection = req.accept(null, req.origin);
-	const user: User = { id: generateId(), name: null };
+	const user: User = generateUser(generateId(ids));
 
 	ids.add(user.id);
 	log('Client %s connected', user.id);

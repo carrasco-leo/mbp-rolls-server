@@ -22,7 +22,7 @@ const schema = joi.object({
 	value: joi.string().trim().required(),
 });
 
-export function rename(connection: connection, user: User, data: any) {
+export function rename(connection: connection, user: User, data: any): Promise<void> {
 	return schema.validateAsync(data)
 		.catch((error: joi.ValidationError) => {
 			return Promise.reject(new MessageError('rename', error.message));

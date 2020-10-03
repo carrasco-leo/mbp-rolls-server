@@ -6,6 +6,7 @@
 import { connection } from 'websocket';
 
 import { rename } from './rename';
+import { start } from './start';
 import { User } from '../user';
 
 export interface MessageFn {
@@ -14,6 +15,7 @@ export interface MessageFn {
 
 export const messagesFn: { [key: string]: MessageFn; } = {
 	rename,
+	start,
 }
 
 export * from './error';
