@@ -37,11 +37,9 @@ export function start(connection: connection, user: User, data: any): Promise<vo
 			return Promise.reject(new MessageError('rename', error.message));
 		})
 		.then((data: StartData) => {
-			const rolls = Array.from({ length: data.dices }, () => d6());
-			const discarded = Array.from({ length: data.dices }, () => 0);
 			const id = generateId(ids);
-
 			ids.add(id);
+
 			user.action = generateAction(id, user.id);
 			user.action.dices = data.dices;
 			user.action.difficulty = data.difficulty;
@@ -52,6 +50,9 @@ export function start(connection: connection, user: User, data: any): Promise<vo
 
 			history.push(user.action);
 			broadcast({ type: 'roll', ...user.action });
-			connection.sendUTF(JSON.stringify({ type: 'ack' }));
+			connection.sendUTF(JSON.stringify({
+				type: 'ack',
+				rolls: user.action.rolls,
+			}));
 		})
 }
