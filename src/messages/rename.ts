@@ -11,6 +11,7 @@ import { User } from '../user';
 import { slugify } from '../util';
 import { usernames, connected, broadcast } from '../connected-users';
 import { log } from '../logging';
+import { history } from '../history';
 
 interface RenameData {
 	type: 'rename';
@@ -61,6 +62,7 @@ function identify(connection: connection, user: User, username: string, slug: st
 			connected.forEach((user) => users[user.id] = user.name);
 			return users;
 		})(),
+		history,
 	}));
 
 	broadcast(connection, {
