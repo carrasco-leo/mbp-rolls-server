@@ -9,6 +9,7 @@ import { rename } from './rename';
 import { start } from './start';
 import { cancel } from './cancel';
 import { modifiers } from './modifiers';
+import { rerolls } from './rerolls';
 
 import { User } from '../user';
 
@@ -21,6 +22,7 @@ export const messagesFn: { [key: string]: MessageFn; } = {
 	start,
 	cancel,
 	modifiers,
+	rerolls,
 }
 
 export * from './error';
