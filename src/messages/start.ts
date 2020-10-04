@@ -34,7 +34,7 @@ export function start(connection: connection, user: User, data: any): Promise<vo
 
 	return schema.validateAsync(data)
 		.catch((error: joi.ValidationError) => {
-			return Promise.reject(new MessageError('rename', error.message));
+			return Promise.reject(new MessageError('start', error.message));
 		})
 		.then((data: StartData) => {
 			const id = generateId(ids);
