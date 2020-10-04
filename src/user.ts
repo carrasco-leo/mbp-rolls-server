@@ -18,7 +18,7 @@ export interface Action {
 export interface User {
 	id: string;
 	name: string;
-	step: 'start';
+	step: 'start'|'primary-modifiers'|'rerolls'|'last-modifiers';
 	currentBonus: number;
 	action: Action;
 }

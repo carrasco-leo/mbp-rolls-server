@@ -8,6 +8,7 @@ import { connection } from 'websocket';
 import { rename } from './rename';
 import { start } from './start';
 import { cancel } from './cancel';
+import { modifiers } from './modifiers';
 
 import { User } from '../user';
 
@@ -19,6 +20,7 @@ export const messagesFn: { [key: string]: MessageFn; } = {
 	rename,
 	start,
 	cancel,
+	modifiers,
 }
 
 export * from './error';

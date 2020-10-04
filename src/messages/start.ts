@@ -47,6 +47,7 @@ export function start(connection: connection, user: User, data: any): Promise<vo
 			user.action.rolls = Array.from({ length: data.dices }, () => d6());
 			user.action.discarded = Array.from({ length: data.dices }, () => 0);
 			user.currentBonus = data.bonus;
+			user.step = 'primary-modifiers';
 
 			history.push(user.action);
 			broadcast({ type: 'roll', ...user.action });
